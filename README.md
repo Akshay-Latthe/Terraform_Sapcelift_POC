@@ -79,48 +79,69 @@ Prerequisites:
 
 Steps:
 
-1) Connect Spacelift to GitHub:
-        Marketplace Application:
-            Visit the Spacelift Marketplace and install the "Spacelift" application.
-            Select your GitHub organization or account and grant necessary permissions.
-            Choose the repositories you want to integrate with Spacelift.
-        Custom Application:
-            Create a custom application in your GitHub account with the following permissions:
-                repo:status
-                workflows
-                read:packages (if using GitHub Packages)
-            Add the application's client ID and secret to Spacelift's configuration.
+## Getting Started
 
+Follow the steps below to set up the integration and start deploying your infrastructure with Spacelift.
 
-2)  Create a Spacelift Stack:
-        In Spacelift, navigate to "Stacks" and click "Create Stack."
-        Select "Terraform" as the Stack type.
-        Specify the Stack name and optionally, a description.
-        Choose the GitHub repository containing your Terraform code.
-        Define the deployment branch (e.g., main).
+### 1. Spacelift Account Setup
+
+- Create a Spacelift account: [Spacelift Sign Up](https://spacelift.io/signup)
+- Log in to your Spacelift account.
+
+### 2. GitHub Integration
+
+- Navigate to the Spacelift dashboard.
+- Integrate Spacelift with your GitHub repository.
+- Follow the on-screen instructions to authorize Spacelift's access to your GitHub repositories.
+
+### 3. Credentials Setup
+
+- Define necessary credentials (e.g., API tokens) for accessing your cloud provider.
+- Store credentials securely in Spacelift.
+
+### 4. Policy Configuration
+
+- Define policies specifying how your infrastructure should be managed.
+- Write policies using Spacelift's configuration language.
+
+### 5. Variables File
+
+- Create a variables file to store configuration values that may change across environments.
+- Reference variables in your Spacelift configuration.
+
+### 6. Spacelift Configuration
+
+- Write a Spacelift configuration file (e.g., `.spacelift.yml`) in your repository.
+- Reference policies, credentials, and variables in your configuration.
+
+### 7. Infrastructure as Code (IaC)
+
+- Define your infrastructure using IaC tools (e.g., Terraform, CloudFormation).
+
+### 8. GitHub Actions/Workflow
+
+- Set up a GitHub Actions workflow or other CI/CD process to trigger Spacelift deployments.
+
+### 9. Testing and Deployment
+
+- Test your configuration in a controlled environment.
+- Deploy changes through Spacelift.
+
+### 10. Review and Iterate
+
+- Regularly review and iterate on your Spacelift configuration, policies, and deployment processes.
+
+## Contributing
+
+Feel free to contribute to this repository by creating issues or submitting pull requests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ![alt text](image-2.png)
 
-3)  Configure Credentials and Variables:
-        Credentials:
-            Static Credentials: Never store credentials in code. Use environment variables, secrets managers, or Spacelift's credential store.
-            IAM Roles: Create an IAM role in AWS with appropriate permissions and use AssumeRole credentials in your Terraform code.
-            Spacelift Credential Store: For enhanced security, use Spacelift's credential store to manage credentials securely.
-        Variables:
-            Use Terraform variables to define sensitive information like passwords, API keys, etc.
-            Store variables securely in Spacelift's variable store, environment variables, or secrets managers.
-
-
-4)   Create Policies (Optional):
-        Use Open Policy Agent (OPA) policies to define rules for Terraform deployments.
-        Policies can enforce compliance, restrict resources, or perform other actions based on specific conditions.
-
 ![alt text](image-4.png)
-
-5)   Define Workflows:
-            Create workflows in Spacelift to automate Terraform deployments.
-            Workflows can be triggered manually, automatically on pull requests or merges, or based on other events.
-            Define the workflow steps, including Terraform commands, approval gates, and notifications.
 
 ![alt text](image-3.png)
 
@@ -163,116 +184,6 @@ allow {
 
 By following these steps and considering the best practices, you can securely and efficiently integrate Spacelift with GitHub to automate Terraform deployments for your AWS infrastructure.
 
-
-
-
-
-
-
-
-
 referrances 
 https://www.youtube.com/watch?v=gfxw_zPpO-4
 https://docs.spacelift.io/
-
-
-
-
-
-
-
-
-I. Prerequisites:
-
-    Spacelift account (administrator access)
-    GitHub account (repository containing Terraform files)
-    AWS account (IAM roles and policies configured for Terraform)
-
-II. Integration Steps:
-
-    Connect Spacelift to GitHub:
-        Marketplace Application:
-            In the Spacelift Marketplace, install the "Spacelift" application.
-            Select your GitHub organization/account and grant permissions.
-            Choose desired repositories to integrate.
-        Custom Application:
-            Create a GitHub application with permissions:
-                repo:status
-                workflows
-                read:packages (if using GitHub Packages)
-            Add application's client ID and secret to Spacelift config.
-
-    Create a Spacelift Stack:
-        Navigate to "Stacks" in Spacelift and click "Create Stack."
-        Select "Terraform" as the Stack type.
-        Specify Stack name and optional description.
-        Choose the GitHub repository containing your Terraform code.
-        Define the deployment branch (e.g., main).
-
-    Configure Credentials and Variables:
-        Credentials:
-            Never store credentials in code! Use environment variables, secrets managers, or Spacelift's credential store.
-            IAM Roles: Create an IAM role in AWS with appropriate permissions and use AssumeRole credentials in your Terraform code.
-            Spacelift Credential Store: For enhanced security, use this to manage credentials securely.
-        Variables:
-            Use Terraform variables for sensitive information (passwords, API keys, etc.).
-            Store variables securely in Spacelift's variable store, environment variables, or secrets managers.
-
-    Create Policies (Optional):
-        Use Open Policy Agent (OPA) policies to define rules for Terraform deployments.
-        Policies can enforce compliance, restrict resources, or perform other actions based on specific conditions.
-
-    Define Workflows:
-        Create workflows in Spacelift to automate Terraform deployments.
-        Workflows can be triggered manually, automatically on pull requests/merges, or based on other events.
-        Define workflow steps, including Terraform commands, approval gates, and notifications.
-
-III. Additional Considerations:
-
-    Best Practices:
-        Follow security best practices for credential and variable management.
-        Use OPA policies for compliance and security.
-        Implement CI/CD pipelines for automated deployments and testing.
-    Troubleshooting:
-        Refer to Spacelift's documentation for troubleshooting steps.
-        Check Spacelift and GitHub Actions logs for detailed information.
-
-IV. Example Commands:
-
-Spacelift:
-Bash
-
-spacelift stack create my-stack --type terraform --repo-url https://github.com/my-org/my-repository
-
-Use code with caution. Learn more
-
-Terraform:
-Bash
-
-terraform init
-terraform plan
-terraform apply
-
-Use code with caution. Learn more
-
-OPA Policy:
-Code snippet
-
-package my_policy
-
-default allow = false
-
-allow {
-  input.operation == "apply" and
-  input.plan.all_changes.resource_type != "aws_iam_user"
-}
-
-Use code with caution. Learn more
-
-V. Customization:
-
-    Replace placeholders like my-stack and https://github.com/my-org/my-repository with your specific values.
-    Add details about any additional configurations or policies specific to your project.
-    Adapt the README's content and structure to meet your team's preferred documentation style.
-
-By following these guidelines and customizing the template, you can create a comprehensive and informative README file to facilitate efficient and secure Spacelift integration for your Terraform and AWS deployments.
