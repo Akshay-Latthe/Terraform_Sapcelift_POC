@@ -8,7 +8,7 @@ resource "aws_security_group" "demo-sg" {
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description      = ""
+    #description      = ""
     from_port        = 22
     to_port          = 8008
     protocol         = "tcp"
