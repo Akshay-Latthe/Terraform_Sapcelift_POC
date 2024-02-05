@@ -4,11 +4,11 @@ data "aws_vpc" "default" {
 
 resource "aws_security_group" "demo-sg" {
   name        = var.demo-sg-name
-  # description = "Allow TLS and SSH inbound traffic"
+  description = "Allow TLS and SSH inbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description      = "SSH"
+    description      = ""
     from_port        = 22
     to_port          = 8008
     protocol         = "tcp"

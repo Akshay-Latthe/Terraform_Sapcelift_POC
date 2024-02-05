@@ -20,7 +20,7 @@ deny [ "Illegal port number" ] {
     resource = resources[_]
 
     any([
-      resource.changes.after.ingress[_].from_port != 22,
-      resource.changes.after.ingress[_].to_port != 22
+      resource.change.after.ingress[_].from_port != 22,
+      resource.change.after.ingress[_].to_port != 22
     ])
 }
