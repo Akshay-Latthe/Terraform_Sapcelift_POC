@@ -8,16 +8,7 @@ resource "aws_security_group" "demo-sg" {
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description      = "TLS from VPC"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    description      = "SSH from VPC"
+    description      = "SSH"
     from_port        = 22
     to_port          = 8080
     protocol         = "tcp"
