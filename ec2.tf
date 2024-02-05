@@ -4,7 +4,7 @@ data "aws_vpc" "default" {
 
 resource "aws_security_group" "demo-sg" {
   name        = var.demo-sg-name
-  description = "Allow TLS inbound traffic"
+  description = "Allow TLS and SSH inbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -15,6 +15,16 @@ resource "aws_security_group" "demo-sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+
+  ingress {
+    description      = "SSH from VPC"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -22,8 +32,9 @@ resource "aws_security_group" "demo-sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+
   tags = {  
-    Name = "allow_tls"
+    Name = "allow_tls_and_ssh"
   }
 }
 
